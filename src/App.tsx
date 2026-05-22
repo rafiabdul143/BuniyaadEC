@@ -8,7 +8,7 @@ import Footer from './components/Footer';
 
 // Pages components used for specific routes
 import Construpedia from './pages/Construpedia';
-import Explor from './pages/Explore1'; // Using 'Explor' as per your provided route
+import Explore from './pages/Explore'; // Using 'Explor' as per your provided route
 import AboutUs from './pages/AboutUs'
 
 // Import the specific Contact page component if it exists, otherwise reuse the component
@@ -42,7 +42,7 @@ function App() {
         <Route path="/aboutus" element={<AboutUs />} />
         
         {/* 3. Explore/Buniyaad Route (using 'Explor' from your definition) */}
-        <Route path="/explor" element={<Explor />} />
+        <Route path="/explore" element={<Explore />} />
 
         {/* 4. Contact Route (Linked from the Hero section, ID 4) */}
         <Route path="/" element={<Contact />} />

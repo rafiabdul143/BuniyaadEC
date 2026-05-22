@@ -155,27 +155,7 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* 4. THE TEAM */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">The Minds Behind Buniyaad</h2>
-            <p className="text-xl text-gray-600">A collective of engineers, educators, and visionaries.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-12">
-            {team.map((member, i) => (
-              <div key={i} className="text-center">
-                <div className="relative inline-block mb-6">
-                  <img src={member.image} alt={member.name} className="w-48 h-48 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border-4 border-white shadow-lg" />
-                  <div className="absolute inset-0 rounded-full border-2 border-dashed border-blue-400 animate-spin-slow opacity-0 group-hover:opacity-100"></div>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900">{member.name}</h3>
-                <p className="text-blue-600 font-medium">{member.role}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+     
 
       {/* 5. MILESTONES (TIMELINE) */}
       {/* Redesigned Our Journey Section */}
