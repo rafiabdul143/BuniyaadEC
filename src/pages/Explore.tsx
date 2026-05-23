@@ -122,27 +122,9 @@ const Explore = () => {
           <p className="mt-6 text-xl text-gray-200 leading-relaxed max-w-3xl mx-auto">
             A comprehensive platform for Civil Engineering Education, Innovation, and Professional Growth.
           </p>
-          <p className="mt-4 text-gray-300 italic font-medium text-lg">Learn • Build • Innovate • Excel</p>
+          <p className="mt-4 text-gray-300 italic font-medium text-lg">Learn • Build • Innovate • Lead</p>
           
-          {/* Stats bar for credibility */}
-          <div className="mt-12 flex flex-wrap justify-center gap-8 text-white">
-            <div className="text-center">
-              <div className="text-2xl font-bold">5000+</div>
-              <div className="text-sm text-gray-300">Resources</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold">1000+</div>
-              <div className="text-sm text-gray-300">Projects</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold">50+</div>
-              <div className="text-sm text-gray-300">Tools</div>
-            </div>
-             {/*<div className="text-center">
-              <div className="text-2xl font-bold">10K+</div>
-              <div className="text-sm text-gray-300">Users</div>
-            </div>*/}
-          </div>
+     
         </div>
         
         {/* Scroll indicator */}

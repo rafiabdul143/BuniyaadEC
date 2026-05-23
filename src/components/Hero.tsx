@@ -189,7 +189,7 @@ export default function Hero() {
   // Navigation Logic
   const handleNavigation = (id: number) => {
   const routes: Record<number, {type: 'route' | 'anchor', target: string}> = {
-    1: { type: 'route', target: '/explor' },
+    1: { type: 'route', target: '/explore' },
     2: { type: 'route', target: '/construpedia' },
     3: { type: 'route', target: '/aboutus' },
     4: { type: 'anchor', target: 'contact' }, // This is an anchor, not a route

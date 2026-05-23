@@ -42,9 +42,9 @@ const Footer = () => {
 
         {/* Logo & Tagline */}
         <div>
-          <h2 className="text-2xl font-bold tracking-wide">Buniyaad</h2>
+          <h2 className="text-2xl font-bold tracking-wide">BuniyaadEC</h2>
           <p className="text-sm text-gray-400 mt-3">
-            Building Strong Foundations for Future Innovators.
+            Building Strong Foundations..
           </p>
         </div>
 
