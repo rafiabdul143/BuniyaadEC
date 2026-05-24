@@ -27,14 +27,14 @@ const sections: Section[] = [
     title: "Construpedia",
     text: "Your Ultimate Civil Engineering Hub for Concepts, Designs & Practical Learning.",
     button: "Explore Construpedia",
-    img: "/src/assets/homepagepic2.jpg",
+    img: "/photos/homepagepic2.jpg",
   },
   {
     id: 3,
     title: "About Us",
     text: "Meet the minds behind BuniyaadEC building a strong foundation for future innovators.",
     button: "Know More",
-    img: "/src/assets/homepagepic3.png",
+    img: "/photos/homepagepic3.png",
   },
   {
     id: 4,
