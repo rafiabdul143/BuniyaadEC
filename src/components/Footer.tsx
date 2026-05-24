@@ -127,7 +127,7 @@ const Footer = () => {
 
         {/* Contact Details */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Contact</h3>
+          <h3 className="text-lg font-semibold mb-4">Contact </h3>
           <p className="text-sm text-gray-300">Email: buniyaadec@gmail.com</p>
           <p className="text-sm text-gray-300 mt-1">Phone: +91 98765 43210</p>
           <p className="text-sm text-gray-300 mt-1">Hyderabad, India</p>
