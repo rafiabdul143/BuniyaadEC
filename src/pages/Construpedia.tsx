@@ -146,7 +146,7 @@ const Construpedia: React.FC = () => {
   <div className="relative z-10 container mx-auto px-6 mt-10 py-16 md:py-20 text-center text-white">
     <h1 className="text-4xl md:text-5xl font-bold">Construpedia</h1>
     <p className="mt-4 text-lg max-w-3xl mx-auto">
-      Your construction knowledge hub – Learn Civil Engineering, AutoCAD, Revit, and more.
+      Your construction knowledge hub Learn Civil Engineering, AutoCAD, Revit, and more.
     </p>
 
     <button

@@ -42,9 +42,13 @@ const Footer = () => {
 
         {/* Logo & Tagline */}
         <div>
-          <h2 className="text-2xl font-bold tracking-wide">BuniyaadEC</h2>
+         <span
+    className="text-2xl  font-bold tracking-tight bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 bg-clip-text text-transparent"
+  >
+    BuniyaadEC
+  </span>
           <p className="text-sm text-gray-400 mt-3">
-            Building Strong Foundations..
+            We Make Strong Foundations..
           </p>
         </div>
 
@@ -124,7 +128,7 @@ const Footer = () => {
         {/* Contact Details */}
         <div>
           <h3 className="text-lg font-semibold mb-4">Contact</h3>
-          <p className="text-sm text-gray-300">Email: support@buniyaad.com</p>
+          <p className="text-sm text-gray-300">Email: buniyaadec@gmail.com</p>
           <p className="text-sm text-gray-300 mt-1">Phone: +91 98765 43210</p>
           <p className="text-sm text-gray-300 mt-1">Hyderabad, India</p>
         </div>

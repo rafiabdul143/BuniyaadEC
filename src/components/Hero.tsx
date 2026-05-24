@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface Section {
   id: number;
@@ -17,7 +17,7 @@ interface TypedTextState {
 const sections: Section[] = [
   {
     id: 1,
-    title: "Welcome To Buniyaad",
+    title: "Welcome To BuniyaadEC",
     text: "Empowering Future Engineers with Knowledge, Innovation & Purpose.",
     button: "Explore Buniyaad",
     img: "/photos/Main.jpg",
@@ -27,14 +27,14 @@ const sections: Section[] = [
     title: "Construpedia",
     text: "Your Ultimate Civil Engineering Hub for Concepts, Designs & Practical Learning.",
     button: "Explore Construpedia",
-    img: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=80",
+    img: "/src/assets/homepagepic2.jpg",
   },
   {
     id: 3,
     title: "About Us",
-    text: "Meet the minds behind Buniyaad—building a strong foundation for future innovators.",
+    text: "Meet the minds behind BuniyaadEC building a strong foundation for future innovators.",
     button: "Know More",
-    img: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1920&q=80",
+    img: "/src/assets/homepagepic3.png",
   },
   {
     id: 4,
@@ -45,11 +45,14 @@ const sections: Section[] = [
   },
 ];
 
+const AUTO_SCROLL_INTERVAL = 8000;
+
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [typedTexts, setTypedTexts] = useState<TypedTextState[]>(
     sections.map(() => ({ text: "", isTyping: false }))
@@ -124,7 +127,7 @@ export default function Hero() {
       if (index !== currentIndex) setCurrentIndex(index);
     };
 
-    container.addEventListener("scroll", handleScroll);
+    container.addEventListener("scroll", handleScroll, { passive: true });
     return () => container.removeEventListener("scroll", handleScroll);
   }, [currentIndex]);
 
@@ -143,93 +146,50 @@ export default function Hero() {
     const timer = setInterval(() => {
       const nextIndex = (currentIndex + 1) % sections.length;
       scrollToSection(nextIndex);
-    }, 5000);
+    }, AUTO_SCROLL_INTERVAL);
     return () => clearInterval(timer);
-  }, [currentIndex, scrollToSection]);
-
-  // Keyboard
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft")
-        scrollToSection((currentIndex - 1 + sections.length) % sections.length);
-      if (e.key === "ArrowRight" || e.key === " ")
-        scrollToSection((currentIndex + 1) % sections.length);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [currentIndex, scrollToSection]);
-
-  // Swipe Handling
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    let startX = 0;
-
-    const start = (e: TouchEvent) => (startX = e.touches[0].clientX);
-    const end = (e: TouchEvent) => {
-      const diff = startX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 50) {
-        if (diff > 0)
-          scrollToSection((currentIndex + 1) % sections.length);
-        else
-          scrollToSection((currentIndex - 1 + sections.length) % sections.length);
-      }
-    };
-
-    container.addEventListener("touchstart", start);
-    container.addEventListener("touchend", end);
-
-    return () => {
-      container.removeEventListener("touchstart", start);
-      container.removeEventListener("touchend", end);
-    };
   }, [currentIndex, scrollToSection]);
 
   // Navigation Logic
   const handleNavigation = (id: number) => {
-  const routes: Record<number, {type: 'route' | 'anchor', target: string}> = {
-    1: { type: 'route', target: '/explore' },
-    2: { type: 'route', target: '/construpedia' },
-    3: { type: 'route', target: '/aboutus' },
-    4: { type: 'anchor', target: 'contact' }, // This is an anchor, not a route
+    const routes: Record<number, { type: 'route' | 'anchor', target: string }> = {
+      1: { type: 'route', target: '/explore' },
+      2: { type: 'route', target: '/construpedia' },
+      3: { type: 'route', target: '/aboutus' },
+      4: { type: 'anchor', target: 'contact' },
+    };
+
+    const route = routes[id] || { type: 'route', target: '/' };
+
+    if (route.type === 'anchor') {
+      if (location.pathname !== '/') {
+        navigate('/');
+        setTimeout(() => {
+          const element = document.getElementById(route.target);
+          if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 300);
+      } else {
+        const element = document.getElementById(route.target);
+        if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      navigate(route.target);
+    }
   };
 
-  const route = routes[id] || { type: 'route', target: '/' };
-
-  if (route.type === 'anchor') {
-    // Handle anchor/scrolling navigation
-    if (location.pathname !== '/') {
-      // Navigate to home page first
-      navigate('/');
-      // Wait for page to load, then scroll to section
-      setTimeout(() => {
-        const element = document.getElementById(route.target);
-        if (element) {
-          element.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      }, 300);
-    } else {
-      // Already on home page, just scroll
-      const element = document.getElementById(route.target);
-      if (element) {
-        element.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    }
-  } else {
-    // Handle regular route navigation
-    navigate(route.target);
-  }
-};
-
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative w-full h-screen overflow-hidden">
+      
+      {/* GRADIENT TIMER BAR */}
+      <div className="absolute top-0 left-0 w-full h-1.5 z-[60] bg-white/10">
+        <div 
+          key={currentIndex} 
+          className="h-full tracking-tight bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400"
+          style={{ 
+            animation: `timerProgress ${AUTO_SCROLL_INTERVAL}ms linear forwards` 
+          }}
+        />
+      </div>
 
       {/* SLIDER */}
       <div
@@ -268,42 +228,35 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* DOTS */}
-      {isHeroVisible && (
-        <div className="fixed bottom-6 w-full flex justify-center gap-3 z-50">
-          {sections.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => scrollToSection(i)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                currentIndex === i ? "bg-white scale-125" : "bg-white/40"
-              }`}
-            ></button>
-          ))}
-        </div>
-      )}
+      {/* DOTS NAVIGATION */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-50">
+        {sections.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => scrollToSection(index)}
+            className={`transition-all duration-300 rounded-full h-2 ${
+              currentIndex === index 
+                ? "w-8 bg-teal-400" 
+                : "w-2 bg-white/50 hover:bg-white"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
 
       {/* ARROWS (Desktop Only) */}
       {!isMobile && isHeroVisible && (
         <>
           <button
-            onClick={() =>
-              scrollToSection((currentIndex - 1 + sections.length) % sections.length)
-            }
-            className="fixed left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full
-                       bg-white/20 hover:bg-white/40 flex items-center justify-center
-                       backdrop-blur-sm z-50 transition"
+            onClick={() => scrollToSection((currentIndex - 1 + sections.length) % sections.length)}
+            className="fixed left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 hover:bg-white/40 flex items-center justify-center backdrop-blur-sm z-50 transition"
           >
             ❮
           </button>
 
           <button
-            onClick={() =>
-              scrollToSection((currentIndex + 1) % sections.length)
-            }
-            className="fixed right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full
-                       bg-white/20 hover:bg-white/40 flex items-center justify-center
-                       backdrop-blur-sm z-50 transition"
+            onClick={() => scrollToSection((currentIndex + 1) % sections.length)}
+            className="fixed right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 hover:bg-white/40 flex items-center justify-center backdrop-blur-sm z-50 transition"
           >
             ❯
           </button>
@@ -317,9 +270,12 @@ export default function Hero() {
         </div>
       )}
 
-      {/* Hide Scrollbar */}
       <style>{`
         .hide-scrollbar::-webkit-scrollbar { display: none; }
+        @keyframes timerProgress {
+          from { width: 0%; }
+          to { width: 100%; }
+        }
       `}</style>
     </div>
   );
