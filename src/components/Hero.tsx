@@ -48,6 +48,7 @@ const sections: Section[] = [
 const AUTO_SCROLL_INTERVAL = 8000;
 
 export default function Hero() {
+  
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
