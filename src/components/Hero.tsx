@@ -19,7 +19,7 @@ const sections: Section[] = [
     id: 1,
     title: "Welcome To BuniyaadEC",
     text: "Empowering Future Engineers with Knowledge, Innovation & Purpose.",
-    button: "Explore Buniyaad",
+    button: "Explore BuniyaadEC",
     img: "/photos/Main.jpg",
   },
   {
@@ -218,12 +218,32 @@ export default function Hero() {
                 {typedTexts[i].text}
               </p>
 
-              <button
-                onClick={() => handleNavigation(sec.id)}
-                className="px-6 py-3 bg-white text-black text-lg rounded-full shadow-md hover:bg-gray-200 transition"
-              >
-                {sec.button}
-              </button>
+        <button
+  onClick={() => handleNavigation(sec.id)}
+  className="
+    relative overflow-hidden
+    px-6 py-3
+    bg-white text-black
+    text-lg font-semibold
+    rounded-full
+    shadow-lg
+    transition-all duration-300 ease-in-out
+    hover:bg-gray-100
+    hover:scale-105
+    hover:shadow-2xl
+    active:scale-95
+    active:shadow-md
+    before:absolute before:inset-0
+    before:bg-black/5
+    before:opacity-0
+    hover:before:opacity-100
+    before:transition
+  "
+>
+  <span className="relative z-10">
+    {sec.button}
+  </span>
+</button>
             </div>
           </section>
         ))}

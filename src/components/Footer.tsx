@@ -80,51 +80,63 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Social Media */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
-          <div className="flex space-x-4">
-            <a 
-              href="https://www.facebook.com/share/17gSqpJXHX/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-2 border border-gray-600 rounded-full hover:bg-white hover:text-black transition"
-            >
-              <FaFacebookF size={16} />
-            </a>
-            <a 
-              href="https://www.instagram.com/buniyaadec?igsh=N2NlNXVoam5zZGQw" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-2 border border-gray-600 rounded-full hover:bg-white hover:text-black transition"
-            >
-              <FaInstagram size={16} />
-            </a>
-            <a 
-              href="https://x.com/Buniyaadec" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-2 border border-gray-600 rounded-full hover:bg-white hover:text-black transition"
-            >
-              <FaXTwitter size={16} />
-            </a>
-            <a 
-              href="#" 
-              className="p-2 border border-gray-600 rounded-full hover:bg-white hover:text-black transition"
-            >
-              <FaLinkedinIn size={16} />
-            </a>
-            <a 
-              href="https://youtube.com/@buniyaadec?si=PaTcoOhHBtMhkEJ5" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-2 border border-gray-600 rounded-full hover:bg-white hover:text-black transition"
-            >
-              <FaYoutube size={16} />
-            </a>
-          </div>
-        </div>
+       {/* Social Media */}
+<div>
+  <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
 
+  <div className="flex space-x-4">
+
+    {/* Facebook */}
+    <a
+      href="https://www.facebook.com/share/17gSqpJXHX/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="p-3 rounded-full bg-[#1877F2] text-white hover:scale-110 transition duration-300 shadow-lg"
+    >
+      <FaFacebookF size={18} />
+    </a>
+
+    {/* Instagram */}
+    <a
+      href="https://www.instagram.com/buniyaadec?igsh=N2NlNXVoam5zZGQw"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="p-3 rounded-full text-white hover:scale-110 transition duration-300 shadow-lg
+      bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600"
+    >
+      <FaInstagram size={18} />
+    </a>
+
+    {/* X / Twitter */}
+    <a
+      href="https://x.com/Buniyaadec"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="p-3 rounded-full bg-black text-white hover:scale-110 transition duration-300 shadow-lg"
+    >
+      <FaXTwitter size={18} />
+    </a>
+
+    {/* LinkedIn */}
+    <a
+      href="#"
+      className="p-3 rounded-full bg-[#0A66C2] text-white hover:scale-110 transition duration-300 shadow-lg"
+    >
+      <FaLinkedinIn size={18} />
+    </a>
+
+    {/* YouTube */}
+    <a
+      href="https://youtube.com/@buniyaadec?si=PaTcoOhHBtMhkEJ5"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="p-3 rounded-full bg-[#FF0000] text-white hover:scale-110 transition duration-300 shadow-lg"
+    >
+      <FaYoutube size={18} />
+    </a>
+
+  </div>
+</div>
         {/* Contact Details */}
         <div>
           <h3 className="text-lg font-semibold mb-4">Contact </h3>

@@ -243,12 +243,14 @@ const AboutUs = () => {
             Get In Touch <ArrowRight size={20} />
           </Link>
           
-          <Link 
-            to="/community" 
-            className="px-8 py-4 border border-white/30 text-white rounded-xl font-bold hover:bg-white hover:text-gray-900 hover:scale-105 transform transition-all duration-300 flex items-center justify-center"
-          >
-            Join the Community
-          </Link>
+               <a
+  href="https://chat.whatsapp.com/JCjPcwWbkRy78H4YBWHxHc"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="px-8 py-4 border border-white/30 text-white rounded-xl font-bold hover:bg-white hover:text-gray-900 hover:scale-105 transform transition-all duration-300 flex items-center justify-center"
+>
+  Join the Community
+</a>
         </div>
 
         <p className="mt-8 text-gray-500 text-sm tracking-wide">

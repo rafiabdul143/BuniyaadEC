@@ -9,6 +9,7 @@ export default function Home() {
   return (
     <>
       <Helmet>
+        {/* Primary SEO */}
         <title>
           BuniyaadEC | Civil Engineering & Infrastructure Solutions
         </title>
@@ -20,19 +21,53 @@ export default function Home() {
 
         <meta
           name="keywords"
-          content="civil engineering, infrastructure, construction, consultancy, engineering education"
+          content="BuniyaadEC, civil engineering, infrastructure, construction consultancy, engineering education, structural design"
         />
 
-        <meta property="og:title" content="BuniyaadEC" />
+        <meta name="author" content="BuniyaadEC" />
+
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://buniyaadec.com" />
+
+        {/* Open Graph / Facebook / LinkedIn */}
+        <meta property="og:type" content="website" />
+
+        <meta
+          property="og:title"
+          content="BuniyaadEC | Civil Engineering & Infrastructure Solutions"
+        />
 
         <meta
           property="og:description"
           content="Modern civil engineering and infrastructure solutions."
         />
 
+        <meta
+          property="og:image"
+          content="https://buniyaadec.com/logo.png"
+        />
+
         <meta property="og:url" content="https://buniyaadec.com" />
 
-        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="BuniyaadEC" />
+
+        {/* Twitter/X SEO */}
+        <meta name="twitter:card" content="summary_large_image" />
+
+        <meta
+          name="twitter:title"
+          content="BuniyaadEC | Civil Engineering & Infrastructure Solutions"
+        />
+
+        <meta
+          name="twitter:description"
+          content="Modern civil engineering and infrastructure solutions."
+        />
+
+        <meta
+          name="twitter:image"
+          content="https://buniyaadec.com/logo.png"
+        />
       </Helmet>
 
       <Hero />

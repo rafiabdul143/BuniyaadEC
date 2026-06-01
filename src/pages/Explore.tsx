@@ -224,12 +224,14 @@ const Explore = () => {
             >
               Explore Construpedia →
             </Link>
-            <Link 
-              to="/community" 
-              className="px-8 py-4 border border-white text-white rounded-xl font-semibold hover:bg-white hover:text-gray-900 hover:scale-105 transform transition-all duration-300"
-            >
-              Join the Community
-            </Link>
+          <a
+  href="https://chat.whatsapp.com/JCjPcwWbkRy78H4YBWHxHc"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="px-8 py-4 border border-white/30 text-white rounded-xl font-bold hover:bg-white hover:text-gray-900 hover:scale-105 transform transition-all duration-300 flex items-center justify-center"
+>
+  Join the Community
+</a>
           </div>
           <p className="mt-6 text-gray-400 text-sm">
             Free forever for students • Premium features for professionals
