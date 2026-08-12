@@ -1,0 +1,93 @@
+| **Category**      | **Element**           | **Standard**                 | **Tailwind Class / Value**                                                         | **Usage**            |
+| ----------------- | --------------------- | ---------------------------- | ---------------------------------------------------------------------------------- | -------------------- |
+| **Typography**    | Primary Font          | Inter                        | `font-sans`                                                                        | Entire application   |
+|                   | Font Weight - Heading | Bold                         | `font-bold`                                                                        | Hero, Section Titles |
+|                   | Font Weight - Card    | Semi Bold                    | `font-semibold`                                                                    | Cards                |
+|                   | Font Weight - Body    | Normal                       | `font-normal`                                                                      | Paragraphs           |
+|                   | Tracking              | Tight                        | `tracking-tight`                                                                   | Main headings        |
+| **Colors**        | Primary Gradient      | Emerald → Teal → Cyan        | `from-emerald-500 via-teal-400 to-cyan-400`                                        | Brand Identity       |
+|                   | Primary Accent        | Teal                         | `text-teal-600`                                                                    | Icons, Highlights    |
+|                   | Primary Background    | White                        | `bg-white`                                                                         | Pages                |
+|                   | Secondary Background  | Slate                        | `bg-slate-50`                                                                      | Sections             |
+|                   | Primary Text          | Dark Slate                   | `text-slate-900`                                                                   | Headings             |
+|                   | Secondary Text        | Medium Slate                 | `text-slate-600`                                                                   | Paragraphs           |
+|                   | Muted Text            | Slate                        | `text-slate-500`                                                                   | Helper Text          |
+|                   | Border Color          | Slate                        | `border-slate-200`                                                                 | Cards & Inputs       |
+| **Main Headings** | Hero H1               | Landing Page                 | `text-5xl lg:text-6xl font-bold tracking-tight`                                    | Homepage Hero        |
+|                   | Section H2            | Standard                     | `text-3xl xl:text-4xl font-bold tracking-tight text-slate-900`                     | All Sections         |
+|                   | Section H3            | Secondary                    | `text-2xl font-bold text-slate-900`                                                | Sub Sections         |
+|                   | Card Heading          | Forms/Cards                  | `text-xl font-semibold text-slate-900`                                             | Login/Register       |
+|                   | Feature Heading       | Cards                        | `text-base font-semibold text-slate-900`                                           | Feature Lists        |
+| **Paragraphs**    | Hero Description      | Large                        | `text-lg leading-8 text-slate-600`                                                 | Homepage             |
+|                   | Section Paragraph     | Standard                     | `text-base leading-7 text-slate-600`                                               | Content              |
+|                   | Card Description      | Small                        | `text-sm leading-6 text-slate-600`                                                 | Feature Cards        |
+|                   | Helper Text           | Smallest                     | `text-xs leading-5 text-slate-500`                                                 | Validation/Footer    |
+| **Buttons**       | Hero CTA              | Primary                      | `rounded-full px-6 py-3 text-lg font-semibold`                                     | Homepage CTA         |
+|                   | Form Button           | Primary                      | `rounded-lg py-3 text-sm font-semibold bg-brand-600 hover:bg-brand-700 text-white` | Login/Register       |
+|                   | Secondary Button      | Outline                      | `border border-slate-300 bg-white hover:bg-slate-50`                               | Secondary Actions    |
+| **Inputs**        | Input Label           | Standard                     | `text-sm font-medium text-slate-700`                                               | Form Labels          |
+|                   | Input Text            | Standard                     | `text-sm`                                                                          | Input Fields         |
+|                   | Input Radius          | Rounded                      | `rounded-lg`                                                                       | Forms                |
+|                   | Input Border          | Standard                     | `border-slate-200`                                                                 | Forms                |
+|                   | Input Height          | Standard                     | `h-11`                                                                             | Forms                |
+| **Cards**         | Card Background       | White                        | `bg-white`                                                                         | Cards                |
+|                   | Card Border           | Slate                        | `border border-slate-200`                                                          | Cards                |
+|                   | Card Radius           | Large                        | `rounded-xl`                                                                       | Cards                |
+|                   | Card Shadow           | Soft                         | `shadow-sm` / `shadow-auth-card`                                                   | Cards                |
+|                   | Card Padding          | Standard                     | `p-6`                                                                              | Small Cards          |
+|                   | Card Padding          | Large                        | `p-8`                                                                              | Forms                |
+| **Icons**         | Library               | Lucide React                 | `lucide-react`                                                                     | Entire App           |
+|                   | Icon Size             | Standard                     | `h-5 w-5` / `h-6 w-6`                                                              | UI Icons             |
+|                   | Icon Color            | Primary                      | `text-teal-600`                                                                    | Brand Icons          |
+|                   | Icon Container        | Soft Accent                  | `rounded-lg bg-teal-50`                                                            | Feature Lists        |
+| **Spacing**       | Section Padding       | Standard                     | `py-20`                                                                            | Main Sections        |
+|                   | Card Gap              | Standard                     | `gap-4`                                                                            | Cards                |
+|                   | Component Gap         | Large                        | `gap-6`                                                                            | Layout               |
+|                   | Vertical Spacing      | Standard                     | `space-y-6`                                                                        | Forms                |
+| **Containers**    | Main Container        | Website                      | `max-w-7xl mx-auto px-6`                                                           | Entire Site          |
+|                   | Form Width            | Auth                         | `max-w-md mx-auto`                                                                 | Login/Register       |
+|                   | Content Width         | Hero                         | `max-w-2xl`                                                                        | Hero Text            |
+| **Border Radius** | Small                 | Inputs                       | `rounded-lg`                                                                       | Forms                |
+|                   | Medium                | Cards                        | `rounded-xl`                                                                       | Cards                |
+|                   | Large                 | Hero Button                  | `rounded-full`                                                                     | CTA                  |
+| **Shadows**       | Standard              | Small                        | `shadow-sm`                                                                        | Cards                |
+|                   | Auth Shadow           | Custom                       | `shadow-auth-card`                                                                 | Auth Forms           |
+|                   | Avoid                 | Heavy                        | ❌ `shadow-2xl`                                                                     | Not Used             |
+| **Animations**    | Fade                  | Subtle                       | `animate-fadeIn`                                                                   | Page Load            |
+|                   | Slide                 | Subtle                       | `animate-slideUp`                                                                  | Hero                 |
+|                   | Hover                 | Scale                        | `hover:scale-105`                                                                  | Buttons              |
+|                   | Duration              | Standard                     | `duration-200` / `duration-300`                                                    | UI                   |
+| **Branding**      | Logo Height           | Desktop                      | `h-14`                                                                             | Navbar               |
+|                   | Brand Name            | Standard                     | `text-xl font-bold tracking-tight`                                                 | Navbar               |
+|                   | Tagline               | Standard                     | `text-sm font-medium text-slate-600`                                               | Navbar               |
+|                   | Divider               | Accent                       | `border-l-2 border-cyan-500 pl-4`                                                  | Navbar               |
+| **Overall Theme** | Design Style          | Enterprise SaaS              | Microsoft Learn / Azure / GitHub / Atlassian                                       | Entire Project       |
+|                   | Visual Language       | Clean, Minimal, Professional | No Glassmorphism                                                                   | Entire Project       |
+|                   | Background            | Light                        | White / Slate                                                                      | Entire Project       |
+|                   | Images                | Minimal                      | Only where required                                                                | Entire Project       |
+|                   | UI Feel               | Corporate                    | Modern EdTech Platform                                                             | Entire Project       |
+
+
+| Don't Use                    | Reason                                                 |
+| ---------------------------- | ------------------------------------------------------ |
+| Glassmorphism                | Doesn't match the rest of the application              |
+| Heavy Blur Effects           | Looks inconsistent                                     |
+| Floating Gradient Blobs      | Too decorative for enterprise UI                       |
+| Neon Colors                  | Breaks brand consistency                               |
+| Dark Dashboard Theme         | Website is primarily light themed                      |
+| Multiple Font Families       | Use only Inter                                         |
+| Oversized Icons              | Keep icons between 20–24px                             |
+| Heavy Shadows (`shadow-2xl`) | Use subtle elevation only                              |
+| Random Accent Colors         | Stick to Emerald → Teal → Cyan branding                |
+| Inconsistent Border Radius   | Use only `rounded-lg`, `rounded-xl`, or `rounded-full` |
+
+
+| Principle               | Description                                                                                                 |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **Consistency**         | Every page should feel like part of the same product.                                                       |
+| **Professionalism**     | Prioritize clarity and trust over visual effects.                                                           |
+| **Accessibility**       | Maintain high contrast, readable typography, and proper spacing.                                            |
+| **Minimalism**          | Remove unnecessary decorations; let content lead.                                                           |
+| **Enterprise First**    | Follow the design language of Microsoft Learn, Azure Portal, GitHub, and Atlassian.                         |
+| **Brand Identity**      | Use the Emerald → Teal → Cyan gradient sparingly for logos, highlights, and active elements only.           |
+| **Reusable Components** | Build shared Typography, Buttons, Cards, Inputs, and Containers instead of styling each page independently. |
