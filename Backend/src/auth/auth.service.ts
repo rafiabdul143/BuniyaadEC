@@ -12,7 +12,9 @@ import { randomInt } from 'crypto';
 import * as argon2 from 'argon2';
 import { StringValue } from 'ms';
 import { RefreshTokenDto } from './dto/refresh-token.dto'; // or './dto'
-
+import * as crypto from 'crypto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 import { UsersService } from '../users/users.service';
 import { EmailService } from '../email/email.service';
 import { PrismaService } from '../prisma/prisma.service';
@@ -334,4 +336,85 @@ async refreshTokens(refreshTokenDto: RefreshTokenDto) {
     const hash = refreshToken ? await argon2.hash(refreshToken) : null;
     await this.usersService.updateRefreshTokenHash(userId, hash);
   }
+  // Inside AuthService class:
+
+async forgotPassword(dto: ForgotPasswordDto) {
+  const { email } = dto;
+  const user = await this.prisma.user.findUnique({ where: { email } });
+
+  // Prevent email enumeration attacks: return generic success response
+  if (!user) {
+    return { message: 'If your email is registered, you will receive a password reset link.' };
+  }
+
+  // Generate a secure random raw token
+  const rawToken = crypto.randomBytes(32).toString('hex');
+  const tokenHash = await argon2.hash(rawToken);
+  const expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes expiry
+
+  // Invalidate any previous un-used tokens for this user
+  await this.prisma.passwordResetToken.updateMany({
+    where: { userId: user.id, usedAt: null },
+    data: { usedAt: new Date() },
+  });
+
+  // Store hashed token in database
+  await this.prisma.passwordResetToken.create({
+    data: {
+      userId: user.id,
+      tokenHash,
+      expiresAt,
+    },
+  });
+
+  // Send raw token via email service (captured by test mock)
+  await this.emailService.sendPasswordResetEmail(user.email, rawToken);
+
+  return { message: 'If your email is registered, you will receive a password reset link.' };
+}
+
+async resetPassword(dto: ResetPasswordDto) {
+  const { token, newPassword } = dto;
+
+  // Find all active, unexpired, unused reset token records
+  const activeTokens = await this.prisma.passwordResetToken.findMany({
+    where: {
+      usedAt: null,
+      expiresAt: { gt: new Date() },
+    },
+  });
+
+  let validRecord = null;
+  for (const record of activeTokens) {
+    const isMatch = await argon2.verify(record.tokenHash, token).catch(() => false);
+    if (isMatch) {
+      validRecord = record;
+      break;
+    }
+  }
+
+  if (!validRecord) {
+    throw new BadRequestException('Invalid or expired password reset token.');
+  }
+
+  const hashedPassword = await argon2.hash(newPassword);
+
+  // Atomically update user password, mark token as used, and clear refresh token hash to logout existing sessions
+  await this.prisma.$transaction(async (tx) => {
+    await tx.user.update({
+      where: { id: validRecord.userId },
+      data: {
+        passwordHash: hashedPassword,
+        refreshTokenHash: null, // Invalidate existing sessions for security
+      },
+    });
+
+    await tx.passwordResetToken.update({
+      where: { id: validRecord.id },
+      data: { usedAt: new Date() },
+    });
+  });
+
+  return { message: 'Password has been successfully reset.' };
+}
 }

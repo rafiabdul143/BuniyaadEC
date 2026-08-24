@@ -45,7 +45,10 @@ lerna-debug.log*
 # temp directory
 .temp
 .tmp
-
+# Development AI tooling
+.agents/
+.claude/
+.windsurf/
 # Runtime data
 pids
 *.pid

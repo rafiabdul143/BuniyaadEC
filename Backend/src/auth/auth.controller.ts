@@ -12,6 +12,8 @@ import { RolesGuard } from './guards/roles.guard';
 import { Roles } from './decorators/roles.decorator';
 import { GetUser } from './decorators/get-user.decorator';
   import{UnauthorizedException} from '@nestjs/common';
+  import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -88,4 +90,15 @@ getSuperAdminData() {
     message: 'Welcome Super Admin! You have root-level system management privileges.',
   };
 }
+@Post('forgot-password')
+  @HttpCode(HttpStatus.OK)
+  async forgotPassword(@Body() dto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(dto);
+  }
+
+  @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    return this.authService.resetPassword(dto);
+  }
 }

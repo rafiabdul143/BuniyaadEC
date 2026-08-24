@@ -17,16 +17,20 @@ export function hasRequiredRole(
     return false;
   }
 
-  // Fail closed if ANY assigned role is invalid.
+  // Fail closed if any assigned role is invalid
   if (userRoles.some((role) => !isSystemRole(role))) {
     return false;
   }
 
-  const maxUserWeight = userRoles.reduce((max, role) => {
+  // At this point all roles are valid SystemRole values
+  const validUserRoles = userRoles as SystemRole[];
+
+  const maxUserWeight = validUserRoles.reduce((max, role) => {
     return Math.max(max, ROLE_WEIGHTS[role]);
   }, 0);
 
   return requiredRoles.some((requiredRole) => {
-    return maxUserWeight >= ROLE_WEIGHTS[requiredRole];
+    const requiredWeight = ROLE_WEIGHTS[requiredRole];
+    return maxUserWeight >= requiredWeight;
   });
 }
