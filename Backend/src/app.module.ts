@@ -5,7 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module'; // <--- Ensure this is imported
-
+import { ProfilesModule } from './profiles/profiles.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -13,7 +13,8 @@ import { AuthModule } from './auth/auth.module'; // <--- Ensure this is imported
     }),
     PrismaModule,
     UsersModule,
-    AuthModule, // <--- Ensure AuthModule is here
+    AuthModule,
+    ProfilesModule // <--- Ensure AuthModule is here
   ],
   controllers: [],
   providers: [],
