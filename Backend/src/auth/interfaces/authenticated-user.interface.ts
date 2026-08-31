@@ -18,6 +18,11 @@ export interface UserWithRolesInput {
   email: string;
   userRoles?: UserRoleRelation[] | { role: { name: string } }[];
 }
+export interface AuthenticatedUser {
+  id: string;
+  email: string;
+  roles: string[];
+}
 
 export interface JwtPayload {
   sub: string;
@@ -27,8 +32,3 @@ export interface JwtPayload {
   exp?: number;
 }
 
-export interface AuthenticatedUser {
-  userId: string;
-  email: string;
-  roles: RoleName[];
-}
