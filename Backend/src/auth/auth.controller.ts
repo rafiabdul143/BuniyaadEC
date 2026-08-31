@@ -50,19 +50,19 @@ async refreshTokens(@Body() dto: RefreshTokenDto) {
 }
 
 
-// src/auth/auth.controller.ts
+
 // src/auth/auth.controller.ts
 
-  @UseGuards(JwtAuthGuard) // <--- ADD THIS GUARD HERE
-  @Post('logout')
-  @HttpCode(HttpStatus.OK)
-  async logout(@GetUser('userId') userId: string) {
-    if (!userId) {
-      throw new UnauthorizedException('User ID not found in token payload.');
-    }
-
-    return this.authService.logout(userId);
+@UseGuards(JwtAuthGuard)
+@Post('logout')
+@HttpCode(HttpStatus.OK)
+async logout(@GetUser('id') userId: string) {
+  if (!userId) {
+    throw new UnauthorizedException('User ID not found in token payload.');
   }
+
+  return this.authService.logout(userId);
+}
   @UseGuards(JwtAuthGuard)
   @Get('me')
   @HttpCode(HttpStatus.OK)

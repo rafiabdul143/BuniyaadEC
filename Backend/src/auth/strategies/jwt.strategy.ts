@@ -26,10 +26,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException('Invalid token payload: unrecognized roles.');
     }
 
-    return {
-      userId: payload.sub,
-      email: payload.email,
-      roles: payload.roles,
-    };
+   return {
+  id: payload.sub,
+  email: payload.email,
+  roles: payload.roles,
+};
   }
 }

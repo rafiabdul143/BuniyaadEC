@@ -14,7 +14,7 @@ export class ProfilesController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async createProfile(
-    @GetUser('userId') userId: string,
+    @GetUser('id') userId: string,
     @Body() dto: CreateProfileDto,
   ): Promise<ProfileResponseDto> {
     return this.profilesService.createProfile(userId, dto);
@@ -22,14 +22,14 @@ export class ProfilesController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getMyProfile(@GetUser('userId') userId: string): Promise<ProfileResponseDto> {
+  async getMyProfile(@GetUser('id') userId: string): Promise<ProfileResponseDto> {
     return this.profilesService.getMyProfile(userId);
   }
 
   @Patch()
   @HttpCode(HttpStatus.OK)
   async updateMyProfile(
-    @GetUser('userId') userId: string,
+    @GetUser('id') userId: string,
     @Body() dto: UpdateProfileDto,
   ): Promise<ProfileResponseDto> {
     return this.profilesService.updateMyProfile(userId, dto);
