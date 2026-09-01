@@ -1,6 +1,15 @@
 import { PrismaService } from '../../src/prisma/prisma.service';
 
 export async function cleanTestDatabase(prisma: PrismaService, emailPrefix = 'test.integration.') {
+  if (process.env.NODE_ENV !== 'test') {
+    throw new Error('cleanTestDatabase must only be run in the test environment');
+  }
+
+  // Also check if the URL ends with test DB
+  if (!process.env.DATABASE_URL?.includes('_test')) {
+    throw new Error('Test environment must use a test database ending in _test');
+  }
+
   try {
     const users = await prisma.user.findMany({
       where: { email: { contains: emailPrefix } },

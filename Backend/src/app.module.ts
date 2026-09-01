@@ -10,6 +10,7 @@ import { ProfilesModule } from './profiles/profiles.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: process.env.NODE_ENV === 'test' ? ['.env.test', '.env'] : '.env',
     }),
     PrismaModule,
     UsersModule,

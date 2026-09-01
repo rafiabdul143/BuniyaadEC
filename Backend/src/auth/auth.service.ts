@@ -359,7 +359,7 @@ async forgotPassword(dto: ForgotPasswordDto) {
   });
 
   // Store hashed token in database
-  await this.prisma.passwordResetToken.create({
+  const resetTokenRecord = await this.prisma.passwordResetToken.create({
     data: {
       userId: user.id,
       tokenHash,
@@ -367,8 +367,11 @@ async forgotPassword(dto: ForgotPasswordDto) {
     },
   });
 
+  // Token includes ID for O(1) lookup
+  const finalToken = `${resetTokenRecord.id}:${rawToken}`;
+
   // Send raw token via email service (captured by test mock)
-  await this.emailService.sendPasswordResetEmail(user.email, rawToken);
+  await this.emailService.sendPasswordResetEmail(user.email, finalToken);
 
   return { message: 'If your email is registered, you will receive a password reset link.' };
 }
@@ -376,24 +379,28 @@ async forgotPassword(dto: ForgotPasswordDto) {
 async resetPassword(dto: ResetPasswordDto) {
   const { token, newPassword } = dto;
 
-  // Find all active, unexpired, unused reset token records
-  const activeTokens = await this.prisma.passwordResetToken.findMany({
-    where: {
-      usedAt: null,
-      expiresAt: { gt: new Date() },
-    },
-  });
-
-  let validRecord = null;
-  for (const record of activeTokens) {
-    const isMatch = await argon2.verify(record.tokenHash, token).catch(() => false);
-    if (isMatch) {
-      validRecord = record;
-      break;
-    }
+  const parts = token.split(':');
+  if (parts.length !== 2) {
+    throw new BadRequestException('Invalid or expired password reset token.');
   }
 
-  if (!validRecord) {
+  const [tokenId, rawToken] = parts;
+
+  let validRecord = null;
+  try {
+    validRecord = await this.prisma.passwordResetToken.findUnique({
+      where: { id: tokenId },
+    });
+  } catch (error) {
+    throw new BadRequestException('Invalid or expired password reset token.');
+  }
+
+  if (!validRecord || validRecord.usedAt || validRecord.expiresAt <= new Date()) {
+    throw new BadRequestException('Invalid or expired password reset token.');
+  }
+
+  const isMatch = await argon2.verify(validRecord.tokenHash, rawToken).catch(() => false);
+  if (!isMatch) {
     throw new BadRequestException('Invalid or expired password reset token.');
   }
 

@@ -4,11 +4,14 @@ import * as argon2 from 'argon2';
 import { createTestApp } from '../../helpers/test-app';
 import { PrismaService } from '../../../src/prisma/prisma.service';
 import { cleanTestDatabase } from '../../helpers/test-database';
+import { EmailService } from '../../../src/email/email.service';
 
 describe('Password Reset Flows (Integration)', () => {
   let app: INestApplication;
   let prisma: PrismaService;
+  let emailServiceMock: jest.Mocked<EmailService>;
   let capturedResetToken: string;
+  let userId: string;
 
   const uniqueId = Date.now();
   const testEmail = `test.integration.pw.${uniqueId}@buniyaadec.com`;
@@ -18,11 +21,11 @@ describe('Password Reset Flows (Integration)', () => {
     const testApp = await createTestApp();
 
     app = testApp.app;
-    const emailServiceMock = testApp.emailServiceMock;
+    emailServiceMock = testApp.emailServiceMock as any;
     prisma = app.get(PrismaService);
 
     // Ensure the email service mock captures the reset token.
-    emailServiceMock.sendPasswordResetEmail.mockImplementation(
+    (emailServiceMock.sendPasswordResetEmail as jest.Mock).mockImplementation(
       (email: string, token: string) => {
         capturedResetToken = token;
         return Promise.resolve(true);
@@ -43,11 +46,13 @@ describe('Password Reset Flows (Integration)', () => {
 
     // Create the test user.
     const hashedPassword = await argon2.hash(testPassword);
+    const mockRefreshTokenHash = await argon2.hash('some-refresh-token');
 
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         email: testEmail,
         passwordHash: hashedPassword,
+        refreshTokenHash: mockRefreshTokenHash,
         fullName: 'Password Reset User',
         emailVerified: true,
         userRoles: {
@@ -57,6 +62,8 @@ describe('Password Reset Flows (Integration)', () => {
         },
       },
     });
+    
+    userId = user.id;
   });
 
   afterAll(async () => {
@@ -64,7 +71,7 @@ describe('Password Reset Flows (Integration)', () => {
     await app.close();
   });
 
-  it('should trigger forgot-password email request successfully', async () => {
+  it('forgot-password succeeds', async () => {
     const response = await request(app.getHttpServer())
       .post('/auth/forgot-password')
       .send({
@@ -72,28 +79,72 @@ describe('Password Reset Flows (Integration)', () => {
       });
 
     expect([200, 201]).toContain(response.status);
+    expect(capturedResetToken).toBeTruthy();
+    expect(capturedResetToken).toContain(':');
   });
 
-  it('should successfully reset password with valid token', async () => {
-    // Fallback in case the reset token is stored directly on the database model.
-    const dbUser = await prisma.user.findUnique({
-      where: {
-        email: testEmail,
-      },
-    });
-
-    const tokenToUse =
-      capturedResetToken || (dbUser as any)?.resetPasswordToken;
-
-    expect(tokenToUse).toBeTruthy();
-
+  it('invalid token is rejected', async () => {
     const response = await request(app.getHttpServer())
       .post('/auth/reset-password')
       .send({
-        token: tokenToUse,
+        token: 'invalid-token-format',
+        newPassword: 'NewSecurePassword456!',
+      });
+
+    expect(response.status).toBe(400);
+  });
+  
+  it('expired token is rejected', async () => {
+    // Modify the token expiration
+    const [tokenId] = capturedResetToken.split(':');
+    await prisma.passwordResetToken.update({
+      where: { id: tokenId },
+      data: { expiresAt: new Date(Date.now() - 10000) },
+    });
+    
+    const response = await request(app.getHttpServer())
+      .post('/auth/reset-password')
+      .send({
+        token: capturedResetToken,
+        newPassword: 'NewSecurePassword456!',
+      });
+
+    expect(response.status).toBe(400);
+    
+    // Restore expiration
+    await prisma.passwordResetToken.update({
+      where: { id: tokenId },
+      data: { expiresAt: new Date(Date.now() + 15 * 60 * 1000) },
+    });
+  });
+  
+  it('valid reset token successfully resets password', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/auth/reset-password')
+      .send({
+        token: capturedResetToken,
         newPassword: 'NewSecurePassword456!',
       });
 
     expect([200, 201]).toContain(response.status);
+  });
+  
+  it('successful reset invalidates refreshTokenHash', async () => {
+    const user = await prisma.user.findUnique({
+      where: { id: userId }
+    });
+    
+    expect(user?.refreshTokenHash).toBeNull();
+  });
+
+  it('already-used token is rejected / reset token cannot be reused', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/auth/reset-password')
+      .send({
+        token: capturedResetToken,
+        newPassword: 'AnotherPassword789!',
+      });
+
+    expect(response.status).toBe(400);
   });
 });
